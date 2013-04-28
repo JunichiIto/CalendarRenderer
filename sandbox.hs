@@ -17,7 +17,7 @@ renderCalendar y m = do
       let h1 = T.unpack $ T.center 21 ' ' $ T.pack $ formatTime defaultTimeLocale "%B %Y" $ fromGregorian y m 1
       let h2 = " Su Mo Tu We Th Fr Sa"
       let (_,_,wday) = toWeekDate $ fromGregorian y m 1
-      let offset = take wday $ repeat "   "
+      let offset = replicate wday "   "
       let calendar = map (rjust 3) $ map show $ take (gregorianMonthLength y m) [1..]
       let body = map concat $ L.chunksOf 7 $ concat [offset, calendar]
       unlines $ concat [[h1, h2], body]
