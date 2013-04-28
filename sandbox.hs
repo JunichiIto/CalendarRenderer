@@ -2,6 +2,10 @@ import Data.Time.Clock
 import Data.Time.Calendar
 import Data.List.Split
 
+import Data.Time
+import Data.Time.Calendar.WeekDate
+ 
+
 date :: IO (Integer,Int,Int) -- :: (year,month,day)
 date = getCurrentTime >>= return . toGregorian . utctDay
 
@@ -9,7 +13,11 @@ rjust :: Int -> String -> String
 rjust width s = replicate (width - length s) ' ' ++ s
 
 main = do
-      print $ splitEvery 7 $ map (rjust 3) $ map show $ take (gregorianMonthLength 2013 4) [1..31]
+      let (_,_,wday) = toWeekDate $ fromGregorian 2013 4 1
+      let offset = take wday $ repeat "   "
+      let calendar = map (rjust 3) $ map show $ take (gregorianMonthLength 2013 4) [1..]
+      print $ splitEvery 7 $ concat [offset, calendar]
+
     -- putStrLn $ "Days in this month: " ++ (show $ gregorianMonthLength 2013 5)
 -- import Data.Time
 -- import System.Locale
