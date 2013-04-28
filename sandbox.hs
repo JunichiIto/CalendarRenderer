@@ -12,11 +12,15 @@ date = getCurrentTime >>= return . toGregorian . utctDay
 rjust :: Int -> String -> String
 rjust width s = replicate (width - length s) ' ' ++ s
 
+myMap :: (a -> b) -> [a] -> [b]
+myMap f (x:xs) = f x : myMap f xs
+myMap _ _      = []
+
 main = do
       let (_,_,wday) = toWeekDate $ fromGregorian 2013 4 1
       let offset = take wday $ repeat "   "
       let calendar = map (rjust 3) $ map show $ take (gregorianMonthLength 2013 4) [1..]
-      print $ splitEvery 7 $ concat [offset, calendar]
+      print $ myMap concat $ splitEvery 7 $ concat [offset, calendar]
 
     -- putStrLn $ "Days in this month: " ++ (show $ gregorianMonthLength 2013 5)
 -- import Data.Time
