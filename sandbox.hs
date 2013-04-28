@@ -22,4 +22,4 @@ main = do
       let (_,_,wday) = toWeekDate $ fromGregorian 2013 4 1
       let offset = take wday $ repeat "   "
       let calendar = map (rjust 3) $ map show $ take (gregorianMonthLength 2013 4) [1..]
-      putStr $ unlines $ myMap concat $ L.chunksOf 7 $ concat [offset, calendar]
+      putStr $ unlines $ map concat $ L.chunksOf 7 $ concat [offset, calendar]
