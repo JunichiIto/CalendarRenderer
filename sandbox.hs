@@ -4,6 +4,10 @@ import Data.List.Split
 
 import Data.Time
 import Data.Time.Calendar.WeekDate
+
+import qualified Data.Text as T
+
+import System.Locale (defaultTimeLocale)
  
 
 date :: IO (Integer,Int,Int) -- :: (year,month,day)
@@ -17,6 +21,9 @@ myMap f (x:xs) = f x : myMap f xs
 myMap _ _      = []
 
 main = do
+      now <- getZonedTime
+      putStrLn $ T.unpack $ T.center 21 ' ' $ T.pack $ formatTime defaultTimeLocale "%B %Y" $ fromGregorian 2013 4 1
+      putStrLn " Su Mo Tu We Th Fr Sa"
       let (_,_,wday) = toWeekDate $ fromGregorian 2013 4 1
       let offset = take wday $ repeat "   "
       let calendar = map (rjust 3) $ map show $ take (gregorianMonthLength 2013 4) [1..]
