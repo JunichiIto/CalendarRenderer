@@ -18,13 +18,13 @@ renderCalendar :: Integer -> Int -> String
 renderCalendar y m = do
   let dayLength = 3
   let weekLength = dayLength * 7
-  let h1 = T.unpack $ T.center weekLength ' ' $ T.pack $ formatTime defaultTimeLocale "%B %Y" $ fromGregorian y m 1
-  let h2 = " Su Mo Tu We Th Fr Sa"
+  let monthYear = T.unpack $ T.center weekLength ' ' $ T.pack $ formatTime defaultTimeLocale "%B %Y" $ fromGregorian y m 1
+  let header = [monthYear, " Su Mo Tu We Th Fr Sa"]
   let (_,_,wday) = toWeekDate $ fromGregorian y m 1
   let offset = replicate wday "   "
   let calendar = map (rjust dayLength) $ map show $ take (gregorianMonthLength y m) [1..]
   let body = map concat $ L.chunksOf 7 $ concat [offset, calendar]
-  unlines $ concat [[h1, h2], body]
+  unlines $ concat [header, body]
 
 main :: IO ()
 main = hspec $ do
