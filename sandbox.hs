@@ -12,10 +12,6 @@ import System.Locale (defaultTimeLocale)
 rjust :: Int -> String -> String
 rjust width s = replicate (width - length s) ' ' ++ s
 
-myMap :: (a -> b) -> [a] -> [b]
-myMap f (x:xs) = f x : myMap f xs
-myMap _ _      = []
-
 main = do
       putStrLn $ T.unpack $ T.center 21 ' ' $ T.pack $ formatTime defaultTimeLocale "%B %Y" $ fromGregorian 2013 4 1
       putStrLn " Su Mo Tu We Th Fr Sa"
