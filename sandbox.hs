@@ -1,14 +1,8 @@
-import Data.Time.Clock
-import Data.Time.Calendar
-import qualified Data.List.Split as L
-
-import Data.Time
-import Data.Time.Calendar.WeekDate
-
-import qualified Data.Text as T
-
+import qualified Data.List.Split as L (chunksOf)
+import Data.Time (formatTime, fromGregorian, gregorianMonthLength)
+import Data.Time.Calendar.WeekDate (toWeekDate)
+import qualified Data.Text as T (pack, unpack, center)
 import System.Locale (defaultTimeLocale)
-
 import Test.Hspec
  
 rjust :: Int -> String -> String
