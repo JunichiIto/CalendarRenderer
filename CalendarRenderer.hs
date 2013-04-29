@@ -31,4 +31,4 @@ body day = do
 firstWeekOffset :: Day -> [String]
 firstWeekOffset day = do
   let (_,_,wday) = toWeekDate day
-  take wday $ repeat $ replicate dayLength ' '
+  replicate wday $ replicate dayLength ' '
