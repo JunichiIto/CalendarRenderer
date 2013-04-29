@@ -36,7 +36,8 @@ calendar day = do
 firstWeekOffset :: Day -> [String]
 firstWeekOffset day = do
   let (_, _, wday) = toWeekDate day
-  replicate wday $ replicate dayLength ' '
+  let offsetLength = if wday == 7 then 0 else wday
+  replicate offsetLength $ replicate dayLength ' '
 
 applyTextFunction :: (T.Text -> T.Text) -> String -> String
 applyTextFunction f = T.unpack . f . T.pack
