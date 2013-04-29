@@ -18,7 +18,8 @@ renderCalendar year month = do
 header :: Day -> [String]
 header day = do
   let weekLength = dayLength * 7
-  let monthYear = T.unpack $ T.center weekLength ' ' $ T.pack $ formatTime defaultTimeLocale "%B %Y" day
+  let center = T.unpack . T.center weekLength ' ' . T.pack
+  let monthYear = center $ formatTime defaultTimeLocale "%B %Y" day
   [monthYear, " Su Mo Tu We Th Fr Sa"]
 
 body :: Day -> [String]
