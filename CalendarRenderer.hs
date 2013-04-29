@@ -8,7 +8,6 @@ import qualified Data.Text as T (pack, unpack, center, justifyRight, Text)
 import System.Locale (defaultTimeLocale)
 
 dayLength = 3
-
 weekLength = dayLength * 7
 
 renderCalendar year month = do
