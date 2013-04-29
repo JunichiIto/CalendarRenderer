@@ -24,9 +24,9 @@ header day = do
 
 body :: Day -> [String]
 body day = do
+  let rjust s = replicate (dayLength - length s) ' ' ++ s
+  let format = rjust . show
   let (year,month,_) = toGregorian day
-  let rjust width s = replicate (width - length s) ' ' ++ s
-  let format = rjust dayLength . show
   let calendar = map format $ take (gregorianMonthLength year month) [1..]
   map concat $ L.chunksOf 7 $ firstWeekOffset day ++ calendar
 
