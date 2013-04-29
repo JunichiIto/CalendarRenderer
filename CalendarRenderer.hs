@@ -10,6 +10,9 @@ import System.Locale (defaultTimeLocale)
 dayLength :: Int
 dayLength = 3
 
+weekLength :: Int
+weekLength = dayLength * 7
+
 renderCalendar :: Integer -> Int -> String
 renderCalendar year month = do
   let day = fromGregorian year month 1
@@ -17,14 +20,12 @@ renderCalendar year month = do
  
 header :: Day -> [String]
 header day = do
-  let weekLength = dayLength * 7
   let center = applyTextFunction $ T.center weekLength ' '
   let monthYear = center $ formatTime defaultTimeLocale "%B %Y" day
   [monthYear, " Su Mo Tu We Th Fr Sa"]
 
 body :: Day -> [String]
-body day = do
-  map concat $ L.chunksOf 7 $ firstWeekOffset day ++ calendar day
+body day = map concat $ L.chunksOf 7 $ firstWeekOffset day ++ calendar day
 
 calendar :: Day -> [String]
 calendar day = do
