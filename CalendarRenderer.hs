@@ -10,9 +10,6 @@ import System.Locale (defaultTimeLocale)
 dayLength :: Int
 dayLength = 3
  
-rjust :: Int -> String -> String
-rjust width s = replicate (width - length s) ' ' ++ s
-
 header :: Day -> [String]
 header d = do
   let weekLength = dayLength * 7
@@ -27,6 +24,7 @@ firstWeekOffset d = do
 body :: Day -> [String]
 body d = do
   let (y,m,_) = toGregorian d
+  let rjust width s = replicate (width - length s) ' ' ++ s
   let calendar = map (rjust dayLength) $ map show $ take (gregorianMonthLength y m) [1..]
   map concat $ L.chunksOf 7 $ concat [firstWeekOffset d, calendar]
 
