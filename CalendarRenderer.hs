@@ -18,7 +18,7 @@ renderCalendar year month = do
 header :: Day -> [String]
 header day = do
   let weekLength = dayLength * 7
-  let center = applyTextFunction (T.center weekLength ' ')
+  let center = applyTextFunction $ T.center weekLength ' '
   let monthYear = center $ formatTime defaultTimeLocale "%B %Y" day
   [monthYear, " Su Mo Tu We Th Fr Sa"]
 
