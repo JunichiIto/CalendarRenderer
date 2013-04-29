@@ -4,6 +4,8 @@ Sample Haskell implementation of https://github.com/JunichiIto/calendar_renderer
 
 ## Setup Haskell and HSpec
 
+For Mac users:
+
 ````
 $ brew install ghc
 $ brew install haskell-platform
