@@ -26,7 +26,8 @@ body :: Day -> [String]
 body day = do
   let (year,month,_) = toGregorian day
   let rjust width s = replicate (width - length s) ' ' ++ s
-  let calendar = map (rjust dayLength) $ map show $ take (gregorianMonthLength year month) [1..]
+  let format = rjust dayLength . show
+  let calendar = map format $ take (gregorianMonthLength year month) [1..]
   map concat $ L.chunksOf 7 $ firstWeekOffset day ++ calendar
 
 firstWeekOffset :: Day -> [String]
