@@ -24,11 +24,13 @@ header day = do
 
 body :: Day -> [String]
 body day = do
+  map concat $ L.chunksOf 7 $ firstWeekOffset day ++ calendar day
+
+calendar :: Day -> [String]
+calendar day = do
   let rjust s = replicate (dayLength - length s) ' ' ++ s
-  let format = rjust . show
   let (year,month,_) = toGregorian day
-  let calendar = map format $ take (gregorianMonthLength year month) [1..]
-  map concat $ L.chunksOf 7 $ firstWeekOffset day ++ calendar
+  map (rjust . show) $ take (gregorianMonthLength year month) [1..]
 
 firstWeekOffset :: Day -> [String]
 firstWeekOffset day = do
