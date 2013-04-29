@@ -31,7 +31,7 @@ calendar :: Day -> [String]
 calendar day = do
   let rjust = applyTextFunction $ T.justifyRight dayLength ' '
   let (year, month, _) = toGregorian day
-  map (rjust . show) $ [1..gregorianMonthLength year month]
+  map (rjust . show) [1..gregorianMonthLength year month]
 
 firstWeekOffset :: Day -> [String]
 firstWeekOffset day = do
