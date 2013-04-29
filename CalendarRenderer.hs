@@ -1,10 +1,10 @@
 module CalendarRenderer (renderCalendar) where
 
 import qualified Data.List.Split as L (chunksOf)
+import qualified Data.Text as T (pack, unpack, center, justifyRight, Text)
 import Data.Time (formatTime, fromGregorian, gregorianMonthLength, toGregorian)
 import Data.Time.Calendar (Day)
 import Data.Time.Calendar.WeekDate (toWeekDate)
-import qualified Data.Text as T (pack, unpack, center, justifyRight, Text)
 import System.Locale (defaultTimeLocale)
 
 dayLength = 3
