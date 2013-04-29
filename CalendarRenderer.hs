@@ -4,7 +4,7 @@ import qualified Data.List.Split as L (chunksOf)
 import Data.Time (formatTime, fromGregorian, gregorianMonthLength, toGregorian)
 import Data.Time.Calendar (Day)
 import Data.Time.Calendar.WeekDate (toWeekDate)
-import qualified Data.Text as T (pack, unpack, center)
+import qualified Data.Text as T (pack, unpack, center, justifyRight)
 import System.Locale (defaultTimeLocale)
 
 dayLength :: Int
@@ -28,9 +28,9 @@ body day = do
 
 calendar :: Day -> [String]
 calendar day = do
-  let rjust s = replicate (dayLength - length s) ' ' ++ s
+  let format = T.unpack . T.justifyRight dayLength ' ' . T.pack . show
   let (year,month,_) = toGregorian day
-  map (rjust . show) $ take (gregorianMonthLength year month) [1..]
+  map format $ take (gregorianMonthLength year month) [1..]
 
 firstWeekOffset :: Day -> [String]
 firstWeekOffset day = do
