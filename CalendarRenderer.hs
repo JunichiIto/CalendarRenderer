@@ -29,12 +29,12 @@ body day = do
 calendar :: Day -> [String]
 calendar day = do
   let rjust = applyTextFunction (T.justifyRight dayLength ' ') . show
-  let (year,month,_) = toGregorian day
+  let (year, month, _) = toGregorian day
   map rjust $ take (gregorianMonthLength year month) [1..]
 
 firstWeekOffset :: Day -> [String]
 firstWeekOffset day = do
-  let (_,_,wday) = toWeekDate day
+  let (_, _, wday) = toWeekDate day
   replicate wday $ replicate dayLength ' '
 
 applyTextFunction :: (T.Text -> T.Text) -> String -> String
