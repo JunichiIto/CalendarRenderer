@@ -13,7 +13,7 @@ dayLength = 3
 renderCalendar :: Integer -> Int -> String
 renderCalendar year month = do
   let day = fromGregorian year month 1
-  unlines $ concat [header day, body day]
+  unlines $ header day ++ body day
  
 header :: Day -> [String]
 header day = do
@@ -26,7 +26,7 @@ body day = do
   let (year,month,_) = toGregorian day
   let rjust width s = replicate (width - length s) ' ' ++ s
   let calendar = map (rjust dayLength) $ map show $ take (gregorianMonthLength year month) [1..]
-  map concat $ L.chunksOf 7 $ concat [firstWeekOffset day, calendar]
+  map concat $ L.chunksOf 7 $ firstWeekOffset day ++ calendar
 
 firstWeekOffset :: Day -> [String]
 firstWeekOffset day = do
