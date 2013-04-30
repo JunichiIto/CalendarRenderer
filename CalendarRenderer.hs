@@ -13,11 +13,10 @@ renderCalendar year month = do
   let day = fromGregorian year month 1
   unlines $ header day ++ body day
  
-header day = [monthYear day, sun_to_sat]
-
-monthYear = center . formatTime defaultTimeLocale "%B %Y"
-
-sun_to_sat = concat $ map rjust ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+header day = do
+  let monthYear = center $ formatTime defaultTimeLocale "%B %Y" day
+  let sun_to_sat = concat $ map rjust ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+  [monthYear, sun_to_sat]
 
 body day = map concat $ L.chunksOf 7 $ firstWeekOffset day ++ calendar day
 
