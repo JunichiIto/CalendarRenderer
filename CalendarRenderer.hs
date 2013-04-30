@@ -13,15 +13,15 @@ renderCalendar year month = do
   let day = fromGregorian year month 1
   unlines $ header day ++ body day
  
-header day = do
-  let center = applyTextFunction $ T.center weekLength ' '
-  let monthYear = center $ formatTime defaultTimeLocale "%B %Y" day
-  [monthYear, " Su Mo Tu We Th Fr Sa"]
+header day = [monthYear day, sun_to_sat]
+
+monthYear = center . formatTime defaultTimeLocale "%B %Y"
+
+sun_to_sat = concat $ map rjust ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
 
 body day = map concat $ L.chunksOf 7 $ firstWeekOffset day ++ calendar day
 
 calendar day = do
-  let rjust = applyTextFunction $ T.justifyRight dayLength ' '
   let (year, month, _) = toGregorian day
   map (rjust . show) [1..gregorianMonthLength year month]
 
@@ -29,5 +29,9 @@ firstWeekOffset day = do
   let (_, _, wday) = toWeekDate day
   let offsetLength = if wday == 7 then 0 else wday
   replicate offsetLength $ replicate dayLength ' '
+
+center = applyTextFunction $ T.center weekLength ' '
+
+rjust = applyTextFunction $ T.justifyRight dayLength ' '
 
 applyTextFunction f = T.unpack . f . T.pack
