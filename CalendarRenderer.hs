@@ -9,25 +9,25 @@ import System.Locale (defaultTimeLocale)
 dayLength = 3
 weekLength = dayLength * 7
 
-renderCalendar year month = do
-  let day = fromGregorian year month 1
-  unlines $ header day ++ body day
+renderCalendar year month = unlines $ header day ++ body day
+  where
+    day = fromGregorian year month 1
  
-header day = do
-  let monthYear = center $ formatTime defaultTimeLocale "%B %Y" day
-  let sun_to_sat = concat $ map rjust ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
-  [monthYear, sun_to_sat]
+header day = [monthYear, sun_to_sat]
+  where
+    monthYear = center $ formatTime defaultTimeLocale "%B %Y" day
+    sun_to_sat = concat $ map rjust ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
 
 body day = map concat $ L.chunksOf 7 $ firstWeekOffset day ++ calendar day
 
-calendar day = do
-  let (year, month, _) = toGregorian day
-  map (rjust . show) [1..gregorianMonthLength year month]
+calendar day = map (rjust . show) [1..gregorianMonthLength year month]
+  where
+    (year, month, _) = toGregorian day
 
-firstWeekOffset day = do
-  let (_, _, wday) = toWeekDate day
-  let offsetLength = if wday == 7 then 0 else wday
-  replicate offsetLength $ replicate dayLength ' '
+firstWeekOffset day = replicate offsetLength $ replicate dayLength ' '
+  where
+    (_, _, wday) = toWeekDate day
+    offsetLength = if wday == 7 then 0 else wday
 
 center = applyTextFunction $ T.center weekLength ' '
 
