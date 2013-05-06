@@ -26,18 +26,18 @@ prevDayOfWeek Sat = Fri
 
 toDaysOfWeek :: Int -> DaysOfWeek
 toDaysOfWeek 1 = Mon
-toDaysOfWeek dow = succDayOfWeek (toDaysOfWeek (dow - 1))
+toDaysOfWeek dow = succDayOfWeek $ toDaysOfWeek (dow - 1)
 
 daysOfWeek :: DaysOfWeek -> [ DaysOfWeek ]
 daysOfWeek d = iterate succDayOfWeek d
 
 
 daysOfMonth :: Integer -> Int -> [ (Int, DaysOfWeek) ]
-daysOfMonth year month = zip [1..gregorianMonthLength year month] (daysOfWeek (toDaysOfWeek dow))
+daysOfMonth year month = zip [1..gregorianMonthLength year month] (daysOfWeek $ toDaysOfWeek dow)
                          where
-                           (_, _, dow) = toWeekDate (fromGregorian year month 1)
+                           (_, _, dow) = toWeekDate $ fromGregorian year month 1
 
-calendarHead = take 7 (map show (daysOfWeek Sun))
+calendarHead = take 7 $ map show $ daysOfWeek Sun
 
 calendarBody :: [(Int, DaysOfWeek)] -> [ [ String ] ]
 calendarBody [] = [[]]
