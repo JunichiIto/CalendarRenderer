@@ -41,14 +41,14 @@ calendarHead = take 7 $ map show $ daysOfWeek Sun
 
 calendarBody :: [(Int, DaysOfWeek)] -> [ [ String ] ]
 calendarBody [] = [[]]
-calendarBody ((1, Sun):xs) = (show 1:y) : ys
-                             where
-                               (y:ys) = calendarBody xs
-calendarBody ((1, dow):xs) = ("":y) : ys
-                             where
-                               (y:ys) = calendarBody ((1, prevDayOfWeek dow) : xs)
-calendarBody ((d, Sat):xs) = [show d] : calendarBody xs
-calendarBody ((d, dow):xs) = (show d : y) : ys
+calendarBody ((1, Sun) : xs) = (show 1 : y) : ys
+                               where
+                                 (y : ys) = calendarBody xs
+calendarBody ((1, dow) : xs) = ("" : y) : ys
+                               where
+                                 (y : ys) = calendarBody ((1, prevDayOfWeek dow) : xs)
+calendarBody ((d, Sat) : xs) = [show d] : calendarBody xs
+calendarBody ((d, dow) : xs) = (show d : y) : ys
                              where
                                (y:ys) = calendarBody xs
 
