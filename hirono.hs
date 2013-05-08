@@ -43,6 +43,7 @@ calendarBody [] = [[]]
 calendarBody ((1, Sun) : xs) = (show 1 : y) : ys
                                where
                                  (y : ys) = calendarBody xs
+calendarBody ((1, Sat):xs) = calendarBody [(1, prevDayOfWeek Sat)] ++ calendarBody xs
 calendarBody ((1, dow) : xs) = ("" : y) : ys
                                where
                                  (y : ys) = calendarBody ((1, prevDayOfWeek dow) : xs)
