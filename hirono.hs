@@ -32,7 +32,7 @@ daysOfWeek :: DaysOfWeek -> [ DaysOfWeek ]
 daysOfWeek d = iterate succDayOfWeek d
 
 daysOfMonth :: Int -> DaysOfWeek -> [ (Int, DaysOfWeek) ]
-daysOfMonth monthLength beginningDayOfMonth = zip [1..monthLength] (daysOfWeek beginningDayOfMonth)
+daysOfMonth monthLength beginningDayOfMonth = zip [1..monthLength] $ daysOfWeek beginningDayOfMonth
 
 calendarHead = take 7 $ map show $ daysOfWeek Sun
 
