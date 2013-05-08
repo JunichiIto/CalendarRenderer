@@ -31,10 +31,8 @@ toDaysOfWeek dow = succDayOfWeek $ toDaysOfWeek (dow - 1)
 daysOfWeek :: DaysOfWeek -> [ DaysOfWeek ]
 daysOfWeek d = iterate succDayOfWeek d
 
-daysOfMonth :: Integer -> Int -> [ (Int, DaysOfWeek) ]
-daysOfMonth year month = zip [1..gregorianMonthLength year month] (daysOfWeek $ toDaysOfWeek dow)
-                         where
-                           (_, _, dow) = toWeekDate $ fromGregorian year month 1
+daysOfMonth :: Int -> DaysOfWeek -> [ (Int, DaysOfWeek) ]
+daysOfMonth monthLength beginningDayOfMonth = zip [1..monthLength] (daysOfWeek beginningDayOfMonth)
 
 calendarHead = take 7 $ map show $ daysOfWeek Sun
 
@@ -43,14 +41,16 @@ calendarBody [] = [[]]
 calendarBody ((1, Sun) : xs) = (show 1 : y) : ys
                                where
                                  (y : ys) = calendarBody xs
-calendarBody ((1, Sat):xs) = calendarBody [(1, prevDayOfWeek Sat)] ++ calendarBody xs
 calendarBody ((1, dow) : xs) = ("" : y) : ys
                                where
                                  (y : ys) = calendarBody ((1, prevDayOfWeek dow) : xs)
-calendarBody ((d, Sat) : xs) = [show d] : calendarBody xs
-calendarBody ((d, dow) : xs) = (show d : y) : ys
-                               where
-                                 (y:ys) = calendarBody xs
+calendarBody ((d, dow):xs) | dow == Sun = []:thisWeek
+                           | otherwise  = thisWeek
+                             where
+                               (y:ys) = calendarBody xs
+                               thisWeek = (show d:y):ys
 
 calendar :: Integer -> Int -> [[String]]
-calendar year month = calendarHead : calendarBody (daysOfMonth year month)
+calendar year month = calendarHead : calendarBody (daysOfMonth (gregorianMonthLength year month) (toDaysOfWeek dow))
+                      where
+                        (_, _, dow) = toWeekDate (fromGregorian year month 1)
