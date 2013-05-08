@@ -43,14 +43,15 @@ calendarBody ((1, Sun) : xs) = (show 1 : y) : ys
                                  (y : ys) = calendarBody xs
 calendarBody ((1, dow) : xs) = ("" : y) : ys
                                where
-                                 (y : ys) = calendarBody ((1, prevDayOfWeek dow) : xs)
-calendarBody ((d, dow):xs) | dow == Sun = []:thisWeek
-                           | otherwise  = thisWeek
-                             where
-                               (y:ys) = calendarBody xs
-                               thisWeek = (show d:y):ys
+                                 (y : ys) = calendarBody $ (1, prevDayOfWeek dow) : xs
+calendarBody ((d, dow) : xs) | dow == Sun = [] : thisWeek
+                             | otherwise  = thisWeek
+                               where
+                                 (y : ys) = calendarBody xs
+                                 thisWeek = (show d : y) : ys
 
 calendar :: Integer -> Int -> [[String]]
-calendar year month = calendarHead : calendarBody (daysOfMonth (gregorianMonthLength year month) (toDaysOfWeek dow))
+calendar year month = calendarHead : (calendarBody $ daysOfMonth monthLength $ toDaysOfWeek dow)
                       where
-                        (_, _, dow) = toWeekDate (fromGregorian year month 1)
+                        monthLength = gregorianMonthLength year month
+                        (_, _, dow) = toWeekDate $ fromGregorian year month 1
